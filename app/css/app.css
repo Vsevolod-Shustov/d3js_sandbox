@@ -1,0 +1,144 @@
+* {
+  box-sizing:border-box;
+  font-size:16px;
+  margin:0;
+  padding:0;
+}
+.row {
+  padding-top:15px;
+  padding-bottom:15px;
+}
+button a {
+  text-decoration:none!important;
+}
+.container {
+  max-width:960px;
+  margin:0 auto;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.inverted {
+  color:white;
+  background-color:black;
+}
+.large {
+  font-size:20px;
+}
+.small {
+  font-size:12px;
+}
+
+table {
+  position:relative;
+  margin-bottom:0!important;
+}
+tr {
+  position:relative;
+}
+tr:first-of-type td {
+  border:0!important;
+}
+td {
+  text-align:center!important;
+  vertical-align:middle!important;
+  font-size:inherit;
+  position:relative;
+  padding:2px!important;
+}
+td:first-letter {
+  text-transform:uppercase;
+}
+input[type="number"] {
+  width:100%;
+  max-width:30px;
+  border:none;
+  text-align:center;
+  outline:none;
+  cursor:ns-resize;
+  background-color:inherit;
+}
+input[type="number"]::selection {
+  background-color:#eee;
+}
+input[type="text"] {
+  border:none;
+  text-align:center;
+  outline:none;
+  border-bottom:1px solid black;
+}
+
+.block {
+  float:left;
+}
+
+.glyphicon-plus,
+.glyphicon-remove,
+.glyphicon-remove-circle {
+  cursor:pointer;
+}
+/*.glyphicon-remove:hover {
+  color:#e00;
+}
+.glyphicon-plus:hover {
+  color:#0e0;
+}*/
+
+.bonus-anchor {
+  position:relative;
+  cursor:pointer;
+  -webkit-user-select: none;
+}
+.glyphicon-chevron-down,
+.glyphicon-resize-vertical {
+  position:absolute;
+  top:2px;
+  right:2px;
+  font-size:10px;
+}
+.header {
+  font-weight:bold;
+  text-align:center;
+  /*border-bottom:1px solid #ccc;*/
+  position:relative;
+}
+.header,
+.header td {
+  border:0!important;
+}
+
+.glyphicon-cog {
+  position:absolute;
+  right:4px;
+  top:4px;
+  cursor:pointer;
+}
+.item {
+  margin-bottom:30px;
+}
+input[type="checkbox"] {
+  float:right;
+  position:relative;
+  right:4px;
+  top:4px;
+  margin-left:8px;
+}
+pre {
+  margin-top:20px;
+}
+section {
+  background:#eee;
+  border-radius:5px;
+  padding:2px 5px;
+  margin-bottom:30px;
+}
+
+.modal-open {
+  overflow-y: auto;
+  padding:0!important;
+}
+.modal-content {
+  padding:10px;
+}

@@ -1,0 +1,14 @@
+{
+  "name": "d3js_sandbox",
+  "description": "",
+  "version": "0.0.1",
+  "homepage": "",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.4.5",
+    "angular-route": "1.4.5",
+    "jquery": "2.x.x",
+    "bootstrap": "3.x.x"
+  }
+}
