@@ -13,25 +13,19 @@
   <script src="js/directives.js"></script>
   <script src="js/services.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="bower_components/d3/d3.min.js"></script>
 </head>
 <body ng-controller="globalCtrl">
 <div class="page-container">
   <div class="container">
     <div id="header" class="row">
       <div class="col-xs-12">
-        <a class="btn btn-default" href="#/home">Home</a>
-        <a class="btn btn-default" href="#/arc">Arc</a>
-        <a class="btn btn-default" href="#/geo">Geo</a>
+        <a class="btn btn-default" ng-class="{active: isActive('/main')}" href="#/home">Home</a>
+        <a class="btn btn-default" ng-class="{active: isActive('/skills')}" href="#/dial">Dial</a>
+        <a class="btn btn-default" ng-class="{active: isActive('/items')}" href="#/geo">Geo</a>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <div ng-view></div>
-      </div>
-    </div>
-    
+    <div ng-view></div>
   </div>
 </div>
 </body>

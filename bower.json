@@ -9,7 +9,6 @@
     "angular": "1.4.5",
     "angular-route": "1.4.5",
     "jquery": "2.x.x",
-    "bootstrap": "3.x.x",
-    "d3": "*"
+    "bootstrap": "3.x.x"
   }
 }

@@ -18,7 +18,7 @@ module.exports = function(grunt) {
       options: {
         base: 'dist',
         branch: 'gh-pages',
-        repo: 'https://github.com/Vsevolod-Shustov/d3js_sandbox.git'
+        repo: 'https://github.com/Vsevolod-Shustov/angular-charsheet.git'
       },
       src: '**/*'
     }

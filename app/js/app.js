@@ -24,8 +24,8 @@ d3sbApp.config(function($routeProvider) {
     when('/home', {
       templateUrl: 'partials/home.html'
     }).
-    when('/arc', {
-      templateUrl: 'partials/arc.html'
+    when('/dial', {
+      templateUrl: 'partials/dial.html'
     }).
     when('/geo', {
       templateUrl: 'partials/geo.html'
