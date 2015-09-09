@@ -1,20 +1,7 @@
 "use strict";
 var d3sbApp = angular.module('d3sbApp', [
-  'ngRoute',
-  'd3sbControllers',
-  'd3sbServices',
-  'd3sbDirectives'
+  'ngRoute'
 ]);
-
-d3sbApp.filter("toArray", function(){
-    return function(obj) {
-        var result = [];
-        angular.forEach(obj, function(val, key) {
-            result.push(val);
-        });
-        return result;
-    };
-});
 
 d3sbApp.config(function($routeProvider) {
     $routeProvider.
@@ -24,16 +11,13 @@ d3sbApp.config(function($routeProvider) {
     when('/home', {
       templateUrl: 'partials/home.html'
     }).
+    when('/bar', {
+      templateUrl: 'partials/bar.html'
+    }).
     when('/arc', {
       templateUrl: 'partials/arc.html'
     }).
     when('/geo', {
       templateUrl: 'partials/geo.html'
     });
-});
-
-d3sbApp.filter('parseInt', function() {
-  return function(input) {
-    return parseInt(input);
-  };
 });
