@@ -82,20 +82,16 @@ d3sbDirectives.directive('arcRegular', ['$compile', function($compile){
           radius = height / 2 - 10,
           pi = Math.PI,
           rotateAngle = 1.1*180;
-
+      
+      var data = Object.keys(scope.values).map(function (key) {return parseInt(scope.values[key])});
+      
       var myScale = d3.scale.linear().domain([0, 100]).range([0, 1.8 * Math.PI]);
       
       var svg = d3.select("#arc_regular").append("svg")
           .attr("width", width)
           .attr("height", height)
         .append("g")
-          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-        
-      scope.$watch('values',function(newData){
-        var data = Object.keys(newData).map(function (key) {return parseInt(newData[key])});
-        console.log(data);
-        svg.selectAll("path").remove();
-        
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");  
         var arc = d3.svg.arc()
           .innerRadius(radius - 40)
           .outerRadius(radius)
@@ -112,6 +108,16 @@ d3sbDirectives.directive('arcRegular', ['$compile', function($compile){
         .enter().append("path")
           .style("fill", function(d, i) { return color[i]; })
           .attr("d", arc);
+          
+      
+        
+      scope.$watch('values',function(){
+        var data = Object.keys(scope.values).map(function (key) {return parseInt(scope.values[key])});
+        svg.selectAll("path")
+          .data(pie(data))
+          .attr("d", arc);
+        
+
         }, true);
     }
   }
