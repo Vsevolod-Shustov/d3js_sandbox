@@ -6,8 +6,8 @@ d3sbDirectives.directive('arcOverlapping', ['$compile', function($compile){
   return {
     restrict: "A",
     link: function(scope, elem, attrs){
-      var width = 450,
-          height = 450,
+      var width = elem[0].offsetWidth,
+          height = width,
           radius = height / 2 - 10,
           pi = Math.PI,
           rotateAngle = 1.1*180;
@@ -19,13 +19,7 @@ d3sbDirectives.directive('arcOverlapping', ['$compile', function($compile){
           .attr("height", height)
         .append("g")
           .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-        
-      scope.$watch('values',function(){
-        //main
-        svg.select("g #pathMain").remove();
-        svg.select("g #pathMin").remove();
-        svg.select("g #pathExpected").remove();
-        
+
         var arcMain = d3.svg.arc()
           .innerRadius(radius - 40)
           .outerRadius(radius)
@@ -67,6 +61,16 @@ d3sbDirectives.directive('arcOverlapping', ['$compile', function($compile){
           .style("fill", "#e74c3c")
           .attr("d", arcExpected)
           .attr("transform", "rotate("+rotateAngle+" 0 0)");
+          
+      scope.$watch('values',function(){
+        arcMain.endAngle(myScale(scope.values.main));        
+        svg.select('#pathMain').attr("d", arcMain);
+        
+        arcMin.endAngle(myScale(scope.values.min));        
+        svg.select('#pathMin').attr("d", arcMin);
+
+        arcExpected.endAngle(myScale(scope.values.expected));        
+        svg.select('#pathExpected').attr("d", arcExpected);
         }, true);
     }
   }
@@ -77,8 +81,8 @@ d3sbDirectives.directive('arcRegular', ['$compile', function($compile){
   return {
     restrict: "A",
     link: function(scope, elem, attrs){
-      var width = 450,
-          height = 450,
+      var width = elem[0].offsetWidth,
+          height = width,
           radius = height / 2 - 10,
           pi = Math.PI,
           rotateAngle = 1.1*180;
