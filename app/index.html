@@ -9,6 +9,8 @@
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/directives.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="bower_components/d3/d3.min.js"></script>
 </head>
@@ -18,16 +20,13 @@
     <div id="header" class="row">
       <div class="col-xs-12">
         <a class="btn btn-default" href="#/home">Home</a>
+        <a class="btn btn-default" href="#/arc">Arc</a>
         <a class="btn btn-default" href="#/tree">Tree</a>
         <a class="btn btn-default" href="#/geo">Geo</a>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <div ng-view></div>
-      </div>
-    </div>
+    <div class="row"><div ng-view></div></div>
     
   </div>
 </div>
