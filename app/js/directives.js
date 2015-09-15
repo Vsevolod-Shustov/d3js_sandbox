@@ -126,3 +126,35 @@ d3sbDirectives.directive('arcOverlapping', [function(){
     }
   }
 }]);
+
+//geo
+d3sbDirectives.directive('geo', [function(){
+  return {
+    restrict: "A",
+    link: function(scope, elem, attrs){
+      var width = elem[0].offsetWidth,
+          height = width/2;
+      
+      var projection = d3.geo.cylindricalStereographic()
+        .parallel(45)
+        .rotate([90, 0])
+        .scale(153)
+        .translate([width / 2, height / 2])
+        .precision(.1);    
+      
+      var path = d3.geo.path()
+        .projection(projection);
+      
+      var svg = d3.select(elem[0]).append("svg").attr({width:width, height:height});
+      
+      d3.json("data/countries.json", function(json) {
+        svg.selectAll("path")
+          .data(json.features)
+          .enter()
+          .append("path")
+          .attr("d", path)
+          .attr("fill","#777");
+        });
+    }
+  }
+}]);
