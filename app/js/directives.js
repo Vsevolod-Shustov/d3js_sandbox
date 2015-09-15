@@ -1,7 +1,58 @@
 "use strict";
 var d3sbDirectives = angular.module('d3sbDirectives', []);
 
-//overlapping
+//arcs regular
+d3sbDirectives.directive('arcRegular', [function(){
+  return {
+    restrict: "A",
+    link: function(scope, elem, attrs){
+      var width = elem[0].offsetWidth,
+          height = width,
+          radius = height / 2 - 10,
+          pi = Math.PI,
+          rotateAngle = 1.1*180;
+
+      var data = Object.keys(scope.values).map(function (key) {return parseInt(scope.values[key])});
+      
+      var myScale = d3.scale.linear().domain([0, 100]).range([0, 1.8 * Math.PI]);
+      
+      var svg = d3.select(elem[0]).append("svg")
+          .attr("width", width)
+          .attr("height", height)
+        .append("g")
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");  
+        var arc = d3.svg.arc()
+          .innerRadius(radius - 40)
+          .outerRadius(radius)
+          .cornerRadius(20);
+
+        var pie = d3.layout.pie()
+          .padAngle(.02)
+          .sort(null);
+
+        var color = ["#f39c12", "#3498db", "#e74c3c"];
+        
+        svg.selectAll("path")
+          .data(pie(data))
+        .enter().append("path")
+          .style("fill", function(d, i) { return color[i]; })
+          .attr("d", arc);
+          
+      
+        
+      scope.$watch('values',function(){
+        var data = Object.keys(scope.values).map(function (key) {return parseInt(scope.values[key])});
+        svg.selectAll("path")
+          .data(pie(data))
+          .attr("d", arc);
+        
+
+        }, true);
+    }
+  }
+}]);
+
+//arcs overlapping
 d3sbDirectives.directive('arcOverlapping', [function(){
   return {
     restrict: "A",
@@ -14,7 +65,7 @@ d3sbDirectives.directive('arcOverlapping', [function(){
 
       var myScale = d3.scale.linear().domain([0, 100]).range([0, 1.8 * Math.PI]);
       
-      var svg = d3.select("#arc_overlapping").append("svg")
+      var svg = d3.select(elem[0]).append("svg")
           .attr("width", width)
           .attr("height", height)
         .append("g")
@@ -71,57 +122,6 @@ d3sbDirectives.directive('arcOverlapping', [function(){
 
         arcExpected.endAngle(myScale(scope.values.expected));        
         svg.select('#pathExpected').attr("d", arcExpected);
-        }, true);
-    }
-  }
-}]);
-
-//regular
-d3sbDirectives.directive('arcRegular', [function(){
-  return {
-    restrict: "A",
-    link: function(scope, elem, attrs){
-      var width = elem[0].offsetWidth,
-          height = width,
-          radius = height / 2 - 10,
-          pi = Math.PI,
-          rotateAngle = 1.1*180;
-      
-      var data = Object.keys(scope.values).map(function (key) {return parseInt(scope.values[key])});
-      
-      var myScale = d3.scale.linear().domain([0, 100]).range([0, 1.8 * Math.PI]);
-      
-      var svg = d3.select("#arc_regular").append("svg")
-          .attr("width", width)
-          .attr("height", height)
-        .append("g")
-          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");  
-        var arc = d3.svg.arc()
-          .innerRadius(radius - 40)
-          .outerRadius(radius)
-          .cornerRadius(20);
-
-        var pie = d3.layout.pie()
-          .padAngle(.02)
-          .sort(null);
-
-        var color = ["#f39c12", "#3498db", "#e74c3c"];
-        
-        svg.selectAll("path")
-          .data(pie(data))
-        .enter().append("path")
-          .style("fill", function(d, i) { return color[i]; })
-          .attr("d", arc);
-          
-      
-        
-      scope.$watch('values',function(){
-        var data = Object.keys(scope.values).map(function (key) {return parseInt(scope.values[key])});
-        svg.selectAll("path")
-          .data(pie(data))
-          .attr("d", arc);
-        
-
         }, true);
     }
   }
