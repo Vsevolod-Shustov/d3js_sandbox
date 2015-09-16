@@ -128,33 +128,71 @@ d3sbDirectives.directive('arcOverlapping', [function(){
 }]);
 
 //geo
-d3sbDirectives.directive('geo', [function(){
+d3sbDirectives.directive('geoOrthographic', [function(){
   return {
     restrict: "A",
     link: function(scope, elem, attrs){
       var width = elem[0].offsetWidth,
-          height = width/2;
+          height = width,
+          mapsize = 200; //apparently set by d3.geo.orthographic
       
-      var projection = d3.geo.cylindricalStereographic()
-        .parallel(45)
-        .rotate([90, 0])
-        .scale(153)
+      var graticule = d3.geo.graticule();
+      
+      var projection = d3.geo.orthographic()
+        .scale(((Math.min(width, height) - 2)/mapsize)*100) //fit to container
         .translate([width / 2, height / 2])
-        .precision(.1);    
+        .clipAngle(90)
+        .precision(.1);
       
       var path = d3.geo.path()
         .projection(projection);
+            
+      var svg = d3.select(elem[0])
+        .append("svg")
+        .attr({width:width, height:height})
+        //.append("g")
+        .attr("id", "map_ortho");
       
-      var svg = d3.select(elem[0]).append("svg").attr({width:width, height:height});
-      
-      d3.json("data/countries.json", function(json) {
+      /*svg.append("defs").append("path")
+        .datum({type: "Sphere"})
+        .attr("id", "sphere")
+        .attr("d", path);
+
+      svg.append("use")
+        .attr("class", "stroke")
+        .attr("xlink:href", "#sphere");
+
+      svg.append("use")
+        .attr("class", "fill")
+        .attr("xlink:href", "#sphere");
+    
+      svg.append("path")
+        .datum(graticule)
+        .attr("class", "graticule")
+        .attr("d", path);*/
+    
+      d3.json("data/world.json", function(json) {
         svg.selectAll("path")
           .data(json.features)
           .enter()
           .append("path")
           .attr("d", path)
-          .attr("fill","#777");
+          .attr("class","land");
         });
+      
+      var lambda = d3.scale.linear()
+        .domain([0, width])
+        .range([-180, 180]);
+
+      var phi = d3.scale.linear()
+        .domain([0, height])
+        .range([90, -90]);
+      
+      svg.on("mousemove", function() {
+        var p = d3.mouse(this);
+        projection.rotate([lambda(p[0]), phi(p[1])]);
+        svg.selectAll("path").attr("d", path);
+      });
     }
   }
 }]);
