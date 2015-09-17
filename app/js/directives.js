@@ -180,19 +180,16 @@ d3sbDirectives.directive('geoOrthographic', [function(){
           .attr("class","land");
         });
       
-      var lambda = d3.scale.linear()
-        .domain([0, width])
-        .range([-180, 180]);
-
-      var phi = d3.scale.linear()
-        .domain([0, height])
-        .range([90, -90]);
-      
-      svg.on("mousemove", function() {
-        var p = d3.mouse(this);
-        projection.rotate([lambda(p[0]), phi(p[1])]);
+      var rotation = [0, 0, 0];
+      var rotationspeed = 0.5
+      var drag = d3.behavior.drag().on("drag", dragrotate);
+      svg.call(drag);     
+      function dragrotate() {
+        rotation[0] = rotation[0] + d3.event.dx*rotationspeed;
+        rotation[1] = rotation[1] - d3.event.dy*rotationspeed;
+        projection.rotate(rotation);
         svg.selectAll("path").attr("d", path);
-      });
+      };
     }
   }
 }]);
