@@ -11,6 +11,7 @@
     "jquery": "2.x.x",
     "bootstrap": "3.x.x",
     "d3": "*",
-    "d3-geo-projection": "*"
+    "d3-geo-projection": "*",
+    "d3-tip": "*"
   }
 }

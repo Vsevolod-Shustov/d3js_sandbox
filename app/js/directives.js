@@ -150,26 +150,10 @@ d3sbDirectives.directive('geoOrthographic', [function(){
       var svg = d3.select(elem[0])
         .append("svg")
         .attr({width:width, height:height})
-        //.append("g")
         .attr("id", "map_ortho");
       
-      /*svg.append("defs").append("path")
-        .datum({type: "Sphere"})
-        .attr("id", "sphere")
-        .attr("d", path);
-
-      svg.append("use")
-        .attr("class", "stroke")
-        .attr("xlink:href", "#sphere");
-
-      svg.append("use")
-        .attr("class", "fill")
-        .attr("xlink:href", "#sphere");
-    
-      svg.append("path")
-        .datum(graticule)
-        .attr("class", "graticule")
-        .attr("d", path);*/
+      var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d.properties.name; });
+      svg.call(tip);
     
       d3.json("data/world.json", function(json) {
         svg.selectAll("path")
@@ -177,7 +161,12 @@ d3sbDirectives.directive('geoOrthographic', [function(){
           .enter()
           .append("path")
           .attr("d", path)
-          .attr("class","land");
+          .attr("class","land")
+          .on("click", function(d){
+            console.log(d.properties.name);
+          })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide);
         });
       
       var rotation = [0, 0, 0];
