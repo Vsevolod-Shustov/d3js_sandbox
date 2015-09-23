@@ -41,9 +41,6 @@ button a {
 .land {
   fill: #222;
 }
-.land:hover {
-  fill: #2ecc71;
-}
 
 .boundary {
   fill: none;

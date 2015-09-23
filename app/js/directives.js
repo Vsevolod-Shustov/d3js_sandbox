@@ -200,8 +200,14 @@ d3sbDirectives.directive('geoOrthographic', [function(){
           .on("click", function(d){
             console.log(d.properties.name);
           })
-          .on('mouseover', tip.show)
-          .on('mouseout', tip.hide);
+          .on('mouseover', function(d){
+            d3.select(this).style("fill", "#2ecc71");
+            tip.show(d);
+          })
+          .on('mouseout', function(d){
+            d3.select(this).style("fill", "#222");
+            tip.hide(d);
+          })
         });
       
       var rotation = [0, 0, 0];
