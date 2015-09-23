@@ -15,10 +15,6 @@ button a {
   max-width:960px;
   margin:0 auto;
 }
-#content,
-#content * {
-  font-size:0;
-}
 #arcControl input[type=range] {
   width:200px!important;
   margin: 0 5px;
@@ -45,6 +41,9 @@ button a {
 .land {
   fill: #222;
 }
+.land:hover {
+  fill: #2ecc71;
+}
 
 .boundary {
   fill: none;
@@ -57,4 +56,7 @@ button a {
   padding:3px;
   border:1px solid black;
   border-radius:3px;
+}
+#map_ortho {
+  cursor:all-scroll;
 }

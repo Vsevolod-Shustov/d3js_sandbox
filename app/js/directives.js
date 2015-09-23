@@ -21,32 +21,41 @@ d3sbDirectives.directive('arcRegular', [function(){
           .attr("height", height)
         .append("g")
           .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");  
-        var arc = d3.svg.arc()
-          .innerRadius(radius - 40)
-          .outerRadius(radius)
-          .cornerRadius(20);
+      var arc = d3.svg.arc()
+        .innerRadius(radius - 40)
+        .outerRadius(radius)
+        .cornerRadius(20);
 
-        var pie = d3.layout.pie()
-          .padAngle(.02)
-          .sort(null);
+      var pie = d3.layout.pie()
+        .padAngle(.02)
+        .sort(null);
 
-        var color = ["#f39c12", "#3498db", "#e74c3c"];
-        
-        svg.selectAll("path")
-          .data(pie(data))
-        .enter().append("path")
-          .style("fill", function(d, i) { return color[i]; })
-          .attr("d", arc);
-          
+      var color = ["#f39c12", "#3498db", "#e74c3c"];
       
+      var g = svg.selectAll(".arc")
+        .data(pie(data))
+        .enter().append("g")
+        .attr("class", "arc");
+      
+      g.append("path")
+        .style("fill", function(d, i) { return color[i]; })
+        .attr("d", arc);      
+      g.append("text")
+        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text(function(d) { return d.value; });
         
       scope.$watch('values',function(){
         var data = Object.keys(scope.values).map(function (key) {return parseInt(scope.values[key])});
-        svg.selectAll("path")
+        //svg.selectAll("path").data(pie(data)).attr("d", arc);
+        svg.selectAll(".arc path")
           .data(pie(data))
           .attr("d", arc);
-        
-
+        svg.selectAll(".arc text")
+          .data(pie(data))
+          .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+          .text(function(d) { return d.value; });
         }, true);
     }
   }
@@ -98,6 +107,13 @@ d3sbDirectives.directive('arcOverlapping', [function(){
           .style("fill", "#f39c12")
           .attr("d", arcMain)
           .attr("transform", "rotate("+rotateAngle+" 0 0)");
+        svg.append("text")
+          .attr("id", "textMain")
+          .attr("dy", ".35em")
+          .style({"text-anchor": "middle",
+            "font-size": height/4,
+            "fill": "#f39c12"})
+          .text(scope.values.main);
         
         //min
         svg.append("path")
@@ -105,23 +121,42 @@ d3sbDirectives.directive('arcOverlapping', [function(){
           .style("fill", "#3498db")
           .attr("d", arcMin)
           .attr("transform", "rotate("+rotateAngle+" 0 0)");
-
+        svg.append("text")
+          .attr("transform", "translate(0," + height / 6 + ")")
+          .attr("id", "textMin")
+          .attr("dy", ".35em")
+          .style({"text-anchor": "middle",
+            "font-size": height/8,
+            "fill": "#3498db"})
+          .text(scope.values.min);
+          
         //expected
         svg.append("path")
           .attr("id", "pathExpected")
           .style("fill", "#e74c3c")
           .attr("d", arcExpected)
           .attr("transform", "rotate("+rotateAngle+" 0 0)");
+        svg.append("text")
+          .attr("transform", "translate(0," + -(height / 6) + ")")
+          .attr("id", "textExpected")
+          .attr("dy", ".35em")
+          .style({"text-anchor": "middle",
+            "font-size": height/8,
+            "fill": "#e74c3c"})
+          .text(scope.values.expected);
           
       scope.$watch('values',function(){
         arcMain.endAngle(myScale(scope.values.main));        
         svg.select('#pathMain').attr("d", arcMain);
+        svg.select('#textMain').text(scope.values.main);
         
         arcMin.endAngle(myScale(scope.values.min));        
         svg.select('#pathMin').attr("d", arcMin);
+        svg.select('#textMin').text(scope.values.min);
 
         arcExpected.endAngle(myScale(scope.values.expected));        
         svg.select('#pathExpected').attr("d", arcExpected);
+        svg.select('#textExpected').text(scope.values.expected);
         }, true);
     }
   }
