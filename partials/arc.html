@@ -1,0 +1,27 @@
+<div id="content" ng-controller="arcCtrl">
+  <div id="arcControl" class="col-sm-12">
+    <table>
+      <tr>
+        <td>Orange:</td>
+        <td><input type="range" min="0" max="100" ng-model="values.main" /></td>
+        <td>{{values.main}}</td>
+      </tr>
+      <tr>
+        <td>Blue:</td>
+        <td><input type="range" min="0" max="100" ng-model="values.min" /></td>
+        <td>{{values.min}}</td>
+      </tr>
+      <tr>
+        <td>Red:</td>
+        <td><input type="range" min="0" max="100" ng-model="values.expected" /></td>
+        <td>{{values.expected}}</td>
+      </tr>
+    </table>
+  </div>
+  <div id="arc_regular" class="col-md-6">
+    <div arc_regular></div>
+  </div>
+  <div id="arc_overlapping" class="col-md-6">
+    <div arc_overlapping></div>
+  </div>
+</div>
